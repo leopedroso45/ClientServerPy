@@ -9,27 +9,27 @@ PORT = 65432        # Port to listen on (non-privileged ports are > 1023)
 
 
 def timeout():
-    print('Game Over')
+    print('Sem mensagens')
 
+def timing():
+    t = Timer(20, timeout)
+    t.start()
+    t.join()
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
 
     conn, addr = s.accept()
-    if conn & addr != False:
-        print("BOA MALUCO")
+    if conn != False:
+        print("Alguem esta se conectando...")
     with conn:
-        print('Connected by', addr)
-        conn.sendall(b'Conexao estabelecida.')
-        while True:
+        print('Conectado com ', addr)
+        while conn._closed != True:
             data = conn.recv(1024)
+            timing()
             if not data:
-                while not data:
-                    conn._accept
-                    t = Timer(10, timeout)
-                    t.start()
-                    t.join()
-                    #print('Disconnected by', addr)
-                    # break
-            conn.sendall(data)
+                timing()
+                s.close()
+
+    conn.sendall(data)

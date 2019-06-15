@@ -12,7 +12,7 @@ def connect(self):
     self.sock.connect((HOST, PORT))
     self.logger.debug('Seve port {}'.format(PORT))
 
-    login = create_aprs_login(self.aprs_user, -1, settings.APRS_APP_NAME, settings.APRS_APP_VER, self.aprs_filter)
+    #login = create_aprs_login(self.aprs_user, -1, settings.APRS_APP_NAME, settings.APRS_APP_VER, self.aprs_filter)
     self.sock.send(login.encode())
     self.sock_file = self.sock.makefile('rw')
 
@@ -21,18 +21,18 @@ def connect(self):
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
-    s.connect((HOST, PORT))
-    s.sendall(b'Tentando conectar...')
+    if s.connect((HOST, PORT)) != False:
+        s.sendall(b'Tentando conectar...')
+    
+        while s._closed != True:
+            if s.recv(1024):
+                print('Received',s.recv(1024))#, repr(data))           
+        #data = s.recv(1024)
+        if s._closed == False:
+            s.sendall(b'Fechando conexao!')
+            data = s.recv(1024)
+            print('Received', repr(data))
+            s.close
 
-    if s.recv(1024) != True:
-        print('Received',s.recv(1024))#, repr(data))
 
-    data = s.recv(1024)
-    if s._closed == False:
-        s.sendall(b'Fechando conexao!')
-        data = s.recv(1024)
-        print('Received', repr(data))
-        s.close
-
-
-print('Received', repr(data))
+#print('Received', repr(data))
