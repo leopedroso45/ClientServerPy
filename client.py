@@ -1,5 +1,6 @@
 # Import socket module 
-import socket 
+import socket
+import time
 
 
 def Main(): 
@@ -28,12 +29,13 @@ def Main():
 		# here it would be a reverse of sent message 
 		print('Received from the server :',str(data.decode('ascii'))) 
 
+		time.sleep(20.0)
 		# ask the client whether he wants to continue 
-		ans = input('\nDo you want to continue(y/n) :') 
-		if ans == 'y': 
-			continue
-		else: 
-			break
+		#ans = input('\nDo you want to continue(y/n) :') 
+		#if ans == 'y': 
+		#	continue
+		#else: 
+		#	break
 	# close the connection 
 	s.close() 
 

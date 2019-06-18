@@ -1,4 +1,4 @@
-# import socket programming library 
+# import socket library 
 import socket 
 
 # import thread module 
@@ -10,7 +10,7 @@ print_lock = threading.Lock()
 # thread fuction 
 def threaded(c): 
 	while True: 
-
+		
 		# data received from client 
 		data = c.recv(1024) 
 		if not data: 
@@ -55,7 +55,8 @@ def Main():
 		print('Connected to :', addr[0], ':', addr[1]) 
 
 		# Start a new thread and return its identifier 
-		start_new_thread(threaded, (c,)) 
+		start_new_thread(threaded, (c,))
+
 	s.close() 
 
 
